@@ -10,6 +10,7 @@ class AdviceGenerator extends React.Component {
     this.state = {
       advice: "",
       isLoading: true,
+      count: 0,
     };
 
     this.getAdvice = this.getAdvice.bind(this);
@@ -28,23 +29,42 @@ class AdviceGenerator extends React.Component {
     //   });
 
     // axios
-    axios
-      .get(`https://api.adviceslip.com/advice`)
-      .then(({ data: { slip: { advice } } }) =>
-        this.setState({ advice: advice, isLoading: false })
-      );
+    axios.get(`https://api.adviceslip.com/advice`).then(
+      ({
+        data: {
+          slip: { advice },
+        },
+      }) => {
+        this.setState({ advice: advice, isLoading: false, count: 5 });
+        this.manageCounter();
+      }
+    );
+  }
+
+  manageCounter() {
+    const counter = setInterval(() => {
+      this.setState({
+        count: this.state.count <= 0 ? 5 : this.state.count - 1,
+      });
+
+      if (this.state.count <= 0) {
+        clearInterval(counter);
+      }
+    }, 1000);
   }
 
   render() {
-    const { advice, isLoading } = this.state;
+    const { advice, isLoading, count } = this.state;
 
     return (
       <div className="advice-generator">
         <button
           className="generate-advice"
           onClick={() => {
-            this.setState({ isLoading: true });
-            this.getAdvice();
+            if (count === 0) {
+              this.setState({ isLoading: true });
+              this.getAdvice();
+            }
           }}
         >
           Generate Advice
@@ -52,8 +72,14 @@ class AdviceGenerator extends React.Component {
         {!isLoading ? (
           <p className="advice">{advice}</p>
         ) : (
-          <div className="loading">Loading....</div>
+          <div className="loading"></div>
         )}
+
+        {count !== 0 ? (
+          <h1 className="timer">
+            You can regenerate advice in {count} seconds!
+          </h1>
+        ) : null}
       </div>
     );
   }
