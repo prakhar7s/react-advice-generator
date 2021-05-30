@@ -1,31 +1,44 @@
 :root {
   --btn-border-animation-color: linear-gradient(
     54deg,
-    rgba(255, 174, 0, 0.671),
-    rgba(248, 14, 92, 0.671)
+    rgba(255, 174, 0, 0.271),
+    rgba(248, 14, 92, 0.271)
   );
   --btn-border-height: 4.5px;
-  --btn-transition-time: 0.2s;
+  --btn-transition-time: 0.6s;
 }
 
 .advice-generator {
-  background-image: url(https://images.unsplash.com/photo-1539141278536-63a0f98360a7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=00e144bdf5b82ca9e097bcf3f36b2442&auto=format&fit=crop&w=1350&q=80);
+  background-image: url(https://images.unsplash.com/photo-1539448455561-25e1e5821f70?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80);
   height: 100vh;
   background-position: center;
   background-size: cover;
+  object-fit: center;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column-reverse;
 }
 
+.advice-generator::before {
+  position: absolute;
+  content: "";
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #28143f5b;
+}
+
 .generate-advice {
-  background: rgba(255, 255, 255, 0.233);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(2px);
   color: rgba(255, 255, 255, 0.8);
   outline: none;
-  padding: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.644);
+  padding: 12px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   font-size: 20px;
   cursor: pointer;
   margin: 80px;
@@ -35,6 +48,7 @@
 .generate-advice:hover {
   color: white;
   background-color: rgba(0, 0, 0, 0.132);
+  border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .generate-advice::after {
@@ -44,6 +58,7 @@
   height: var(--btn-border-height);
   background: var(--btn-border-animation-color);
   left: 0;
+  height: 50px;
   top: 1px;
   transition: var(--btn-transition-time);
 }
@@ -59,6 +74,7 @@
   height: var(--btn-border-height);
   right: 0;
   bottom: 0;
+  height: 50px;
   background: var(--btn-border-animation-color);
   width: 0%;
   transition: var(--btn-transition-time);
@@ -70,8 +86,8 @@
 
 .advice-generator .advice {
   font-size: 25px;
-  color: red;
-  font-weight: 600;
+  color: white;
+  font-weight: 400;
   backdrop-filter: blur(30px);
   text-align: center;
   animation: 1s fade-in linear;
@@ -88,52 +104,69 @@
 
 .advice-generator .timer {
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 400;
   justify-self: flex-end;
   position: absolute;
-  top: 75%;
-  animation: zoom-out 1s alternate infinite;
+  top: 90%;
+  animation: zoom-out 0.8s alternate infinite;
   transition: 1s all;
   transform: scale(1.1);
-  background: -webkit-repeating-linear-gradient(
-    rgb(255, 0, 64),
-    rgb(0, 41, 128)
-  );
-  font-weight: bolder;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: blue;
+  color: rgb(233, 233, 233);
+  opacity: 1;
+  text-align: center;
 }
 
 @keyframes zoom-out {
   to {
     transform: scale(1);
-    background: -webkit-repeating-linear-gradient(
-      rgb(255, 255, 255),
-      rgb(255, 255, 255)
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 700;
   }
   from {
-    transform: scale(1.13);
+    transform: scale(1.02);
   }
 }
 
-.advice-generator .loading {
-  border: 4px solid transparent;
-  border-color: white transparent white transparent;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  animation: round 0.35s linear infinite;
+.loader {
+  width: 50px;
+  height: 50px;
+  animation: rotate 2s linear infinite;
+}
+.loader #loader-circle {
+  stroke: #3291f0;
+  fill: none;
+  stroke-width: 5;
+  stroke-linecap: round;
+  animation: dash 1.5s ease-in-out infinite;
 }
 
-@keyframes round {
-  to {
-    transform: rotate(1turn);
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  .advice-generator .advice {
+    font-size: 16px;
+  }
+
+  .advice-generator .timer {
+    font-size: 15px;
   }
 }

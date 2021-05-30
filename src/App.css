@@ -2,8 +2,7 @@
 *::before,
 *::after {
   margin: 0;
-  font-family: "Poppins", sans-serif;
-  color: green;
+  font-family: "Roboto", sans-serif;
 }
 
 html,

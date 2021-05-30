@@ -72,12 +72,22 @@ class AdviceGenerator extends React.Component {
         {!isLoading ? (
           <p className="advice">{advice}</p>
         ) : (
-          <div className="loading"></div>
+          <div className="loader">
+            <svg id="loader5" className="mar-10" viewBox="00 00 50 50">
+              <circle
+                id="loader-circle"
+                fill="none"
+                cx="25"
+                cy="25"
+                r="20"
+              ></circle>
+            </svg>
+          </div>
         )}
 
         {count !== 0 ? (
           <h1 className="timer">
-            You can regenerate advice in {count} seconds!
+            ***You can regenerate advice in {count} seconds!***
           </h1>
         ) : null}
       </div>
